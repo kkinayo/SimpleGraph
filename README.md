@@ -1,0 +1,2 @@
+# SimpleGraph
+Binance tracker
