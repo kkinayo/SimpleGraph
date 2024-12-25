@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SimpleGraph.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:local="using:SimpleGraph"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+        x:Class="SimpleGraph.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SimpleGraph"
+		RequestedThemeVariant="Dark">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel />
+	</Design.DataContext>
+
+	<Grid
+		Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="90*" />
+		</Grid.RowDefinitions>
+
+		<lvc:CartesianChart
+			SyncContext="{Binding Sync}"
+			XAxes="{Binding XAxes}"
+				Grid.Row="1"
+				Series="{Binding Series}" />
+
+		<Menu Grid.Row="0"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Top">
+
+			<ComboBox SelectedValue="{Binding SelectedTicker} "
+				ItemsSource="{Binding Tickers}"
+				x:Name="TickerSymbol" />
+
+			<NumericUpDown 	Minimum="2"
+				Value="{Binding SelectedTick}" />
+
+			<ToggleButton IsChecked="false">
+				<ToggleButton.Styles>
+
+					<Style Selector="ToggleButton:unchecked">
+						<Setter Property="Content" Value="Connect" />
+						<Setter Property="BorderBrush" Value="Black" />
+						<Setter Property="Background" Value="White" />
+						<Setter Property="Foreground" Value="Black" />
+						<Setter Property="Command" Value="{Binding Disconnect}" />
+					</Style>
+
+					<Style Selector="ToggleButton:checked">
+						<Setter Property="Content" Value="Disconnect" />
+						<Setter Property="BorderBrush" Value="Black" />
+						<Setter Property="Background" Value="Red" />
+						<Setter Property="Foreground" Value="White" />
+						<Setter Property="Command" Value="{Binding Connect}" />
+					</Style>
+				</ToggleButton.Styles>
+			</ToggleButton>
+		</Menu>
+	</Grid>
+</Window>
